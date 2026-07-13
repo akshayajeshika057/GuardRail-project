@@ -1,4 +1,4 @@
-name: GuardRail Advanced Security Scan
+name: GuardRail Ultimate Security Scan
 on: [push, pull_request]
 
 jobs:
@@ -27,3 +27,17 @@ jobs:
         run: |
           pip install semgrep
           semgrep --config=p/security-audit ./
+
+  SCA-Scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependency Scan via Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
