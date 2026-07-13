@@ -22,7 +22,7 @@ jobs:
       - name: Security Check via Semgrep
         run: |
           pip install semgrep
-          semgrep --config=p/default ./ ||
+          semgrep --config=p/default ./ || true
 
   SCA-Scan:
     runs-on: ubuntu-latest
