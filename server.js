@@ -1,3 +1,4 @@
-// Strict Security Test File
-const FAKE_PROD_KEY = "wJalrXUtnFEMIK7MDENGbPxRfiCYz89DkaLpqz2X"; 
-console.log("Database connected successfully...");
+// Strict GuardRail Scan Test
+// Using a simulated GitHub Token structure
+const MY_GITHUB_TOKEN = "ghp_MockTokenForSecurityScanning123456789";
+console.log("GuardRail system active...");
