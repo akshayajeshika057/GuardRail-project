@@ -1,4 +1,36 @@
-- name: Security Check via Semgrep
+name: GuardRail Ultimate Security Scan
+
+on: [push]
+
+jobs:
+  Secret-Scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run TruffleHog
+        uses: trufflesecurity/trufflehog@main
+        with:
+          base: ""
+          head: ${{ github.ref_name }}
+
+  SAST-Scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Security Check via Semgrep
         run: |
           pip install semgrep
           semgrep --config=p/default --error ./
+
+  SCA-Scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run Trivy SCA
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          format: 'table'
