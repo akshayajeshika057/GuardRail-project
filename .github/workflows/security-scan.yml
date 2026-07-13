@@ -1,5 +1,6 @@
-name: GuardRail Secret Scan
+name: GuardRail Advanced Security Scan
 on: [push, pull_request]
+
 jobs:
   Secret-Scan:
     runs-on: ubuntu-latest
@@ -15,3 +16,14 @@ jobs:
           path: ./
           base: ""
           head: "HEAD"
+
+  SAST-Scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Security Check via Semgrep
+        run: |
+          pip install semgrep
+          semgrep --config=p/security-audit ./
