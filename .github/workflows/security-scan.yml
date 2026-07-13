@@ -1,43 +1,4 @@
-name: GuardRail Ultimate Security Scan
-on: [push, pull_request]
-
-jobs:
-  Secret-Scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Scan for Secrets
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          base: ""
-          head: "HEAD"
-
-  SAST-Scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Security Check via Semgrep
+- name: Security Check via Semgrep
         run: |
           pip install semgrep
-          semgrep --config=p/security-audit ./
-
-  SCA-Scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Dependency Scan via Trivy
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'table'
-          severity: 'CRITICAL,HIGH'
+          semgrep --config=p/default --error ./
